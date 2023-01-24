@@ -6,3 +6,7 @@ export interface Cart {
   description: String
   image: String
 }
+
+export type ReactChildrenProps = {
+  children?: React.ReactNode
+}
