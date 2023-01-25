@@ -1,13 +1,16 @@
 import './App.css'
 import Main from './components/Main/Main'
 import Navbar from './components/Navbar/Navbar'
+import ProductsProvider from './context/ProductsProvider'
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <Main />
-    </div>
+    <ProductsProvider>
+      <div className="App">
+        <Navbar />
+        <Main />
+      </div>
+    </ProductsProvider>
   )
 }
 

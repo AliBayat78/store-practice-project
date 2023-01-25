@@ -7,11 +7,13 @@ const Main = () => {
   const setProducts = useProductsAction()
 
   useEffect(() => {
-    console.log(getProducts())
-    const data = getProducts().then((resp) => {
-      return resp
-    })
-    console.log(data)
+    getProducts()
+      .then((res) => {
+        setProducts(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }, [])
 
   return <div></div>

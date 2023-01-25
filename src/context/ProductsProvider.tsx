@@ -6,7 +6,7 @@ const ProductsContextDispatcher = React.createContext<
   React.Dispatch<React.SetStateAction<Cart[] | undefined>>
 >(() => {})
 
-const ProductsProvider = ({ children }: ReactChildrenProps): React.ReactNode => {
+const ProductsProvider = ({ children }: ReactChildrenProps) => {
   const [products, setProducts] = useState<Cart[]>()
 
   return (
@@ -17,6 +17,8 @@ const ProductsProvider = ({ children }: ReactChildrenProps): React.ReactNode => 
     </ProductsContext.Provider>
   )
 }
+
+export default ProductsProvider
 
 export const useProducts = () => useContext(ProductsContext)
 export const useProductsAction = () => useContext(ProductsContextDispatcher)
