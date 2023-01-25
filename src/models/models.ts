@@ -10,3 +10,11 @@ export interface Cart {
 export type ReactChildrenProps = {
   children?: React.ReactNode
 }
+
+export interface CartProps {
+  title: String
+  description: String
+  price: String
+  image: String
+  category: String
+}
