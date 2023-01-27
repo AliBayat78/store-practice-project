@@ -23,6 +23,7 @@ const Main = () => {
       {products?.map((item) => {
         return (
           <Cart
+            id={item.id}
             key={item.id}
             title={item.title}
             category={item.category}

@@ -17,4 +17,5 @@ export interface CartProps {
   price: String
   image: String
   category: String
+  id: number
 }
