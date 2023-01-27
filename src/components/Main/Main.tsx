@@ -19,7 +19,7 @@ const Main = () => {
   }, [])
 
   return (
-    <div className="w-full h-full cartContainer">
+    <div className="w-full h-full flex flex-row flex-wrap justify-around items-center">
       {products?.map((item) => {
         return (
           <Cart
