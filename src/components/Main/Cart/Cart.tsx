@@ -1,7 +1,8 @@
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { useProducts, useProductsAction } from '../../../context/ProductsProvider'
 import { CartProps } from '../../../models/models'
 import { deleteProduct } from '../../../Services/deleteProductService'
-import { getProducts } from '../../../Services/getProductsService'
 import './cart.css'
 
 const Cart = (props: CartProps) => {
@@ -10,10 +11,20 @@ const Cart = (props: CartProps) => {
   const products = useProducts()
   const setProducts = useProductsAction()
 
-  const deleteHandler = async (id: number) => {
+  const deleteHandler = async (id: number): Promise<void> => {
     try {
-      await deleteProduct(id)
-      await getProducts().then((res) => console.log(res))
+      await deleteProduct(id).then((res) =>
+        toast(`status code: ${res.status} - Using Fake API`, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        }),
+      )
     } catch (error) {
       console.log(error)
     }
