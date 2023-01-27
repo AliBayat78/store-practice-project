@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useProducts, useProductsAction } from '../../context/ProductsProvider'
 import { getProducts } from '../../Services/getProductsService'
 import Cart from './Cart/Cart'
+import './main.css'
 
 const Main = () => {
   const products = useProducts()
@@ -18,7 +19,7 @@ const Main = () => {
   }, [])
 
   return (
-    <div>
+    <div className="w-full h-full cartContainer">
       {products?.map((item) => {
         return (
           <Cart
