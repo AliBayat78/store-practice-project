@@ -1,15 +1,11 @@
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { useProducts, useProductsAction } from '../../../context/ProductsProvider'
 import { CartProps } from '../../../models/models'
 import { deleteProduct } from '../../../Services/deleteProductService'
 import './cart.css'
 
 const Cart = (props: CartProps) => {
   const { price, title, description, category, image, id } = props
-
-  const products = useProducts()
-  const setProducts = useProductsAction()
 
   const deleteHandler = async (id: number): Promise<void> => {
     try {
