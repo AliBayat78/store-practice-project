@@ -1,10 +1,10 @@
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { CartProps } from '../../../models/models'
+import { Cart } from '../../../models/models'
 import { deleteProduct } from '../../../Services/deleteProductService'
 import './cart.css'
 
-const Cart = (props: CartProps) => {
+const CartComponent = (props: Cart) => {
   const { price, title, description, category, image, id } = props
 
   const deleteHandler = async (id: number): Promise<void> => {
@@ -47,4 +47,4 @@ const Cart = (props: CartProps) => {
   )
 }
 
-export default Cart
+export default CartComponent
