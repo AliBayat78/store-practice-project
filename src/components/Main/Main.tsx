@@ -52,7 +52,7 @@ const Main = () => {
           placeholder="price"
           type="number"
           min="0.01"
-          // onChange={(e) => setProduct({ ...Product, price: e.target.value })}
+          onChange={(e) => setProduct({ ...Product, price: Number(e.target.value) })}
         />
         <input
           type="file"
