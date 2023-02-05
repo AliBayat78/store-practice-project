@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { useProducts, useProductsAction } from '../../context/ProductsProvider'
 import { Cart } from '../../models/models'
 import { getProducts } from '../../Services/getProductsService'
+import { PostProduct } from '../../Services/postProductService'
 import CartComponent from './Cart/Cart'
 import './main.css'
 
@@ -27,6 +29,30 @@ const Main = () => {
         console.log(err)
       })
   }, [])
+
+  const addProductHandler = async (Product: Cart): Promise<void> => {
+    try {
+      await PostProduct(Product).then((res) =>
+        toast(`status code: ${res.status} - Using Fake API`, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        }),
+      )
+      await getProducts()
+        .then((res) => {
+          setProducts(res)
+        })
+        .catch((err) => console.log(err))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -61,7 +87,10 @@ const Main = () => {
           name="img"
           onChange={(e) => setProduct({ ...Product, image: e.target.value })}
         />
-        <button className="bg-white w-20 h-10 rounded-lg hover:bg-violet-300 hover:text-blue-500 hover:text-lg ease-in-out duration-300">
+        <button
+          onClick={() => addProductHandler(Product)}
+          className="bg-white w-20 h-10 rounded-lg hover:bg-violet-300 hover:text-blue-500 hover:text-lg ease-in-out duration-300"
+        >
           Add
         </button>
       </div>
