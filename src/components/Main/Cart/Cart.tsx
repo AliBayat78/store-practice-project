@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Cart } from '../../../models/models'
-import { deleteProduct } from '../../../Services/deleteProductService'
+import { deleteProduct } from '../../../Services/CRUD/deleteProductService'
 import './cart.css'
 
 const CartComponent = (props: Cart) => {

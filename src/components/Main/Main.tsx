@@ -1,9 +1,9 @@
-import { SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useProducts, useProductsAction } from '../../context/ProductsProvider'
 import { Cart } from '../../models/models'
-import { getProducts } from '../../Services/getProductsService'
-import { PostProduct } from '../../Services/postProductService'
+import { getProducts } from '../../Services/CRUD/getProductsService'
+import { PostProduct } from '../../Services/CRUD/postProductService'
 import CartComponent from './Cart/Cart'
 import './main.css'
 

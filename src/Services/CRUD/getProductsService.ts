@@ -1,5 +1,5 @@
-import { Cart } from '../models/models'
-import http from './httpService'
+import { Cart } from '../../models/models'
+import http from '../httpService'
 
 export const getProducts = async (): Promise<Cart[]> => {
   return http
