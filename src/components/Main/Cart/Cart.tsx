@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useProducts, useProductsAction } from '../../../context/ProductsProvider'
 import { Cart } from '../../../models/models'
 import { deleteProduct } from '../../../Services/CRUD/deleteProductService'
+import { getProducts } from '../../../Services/CRUD/getProductsService'
+import { updateProduct } from '../../../Services/CRUD/putProductService'
 import './cart.css'
 
 const CartComponent = (props: Cart) => {
@@ -11,7 +13,7 @@ const CartComponent = (props: Cart) => {
   const setProducts = useProductsAction()
   const { price, title, description, category, image, id } = props
   const [edit, setEdit] = useState<boolean>(false)
-  const [updateCart, setUpdateCart] = useState<Cart>({
+  const [updatedCart, setUpdatedCart] = useState<Cart>({
     category: '',
     title: '',
     description: '',
@@ -23,7 +25,7 @@ const CartComponent = (props: Cart) => {
   const deleteHandler = async (id: number): Promise<void> => {
     try {
       await deleteProduct(id).then((res) =>
-        toast(`status code: ${res.status} - Using Fake API`, {
+        toast(`status code: ${res.status} - Deleted - Using Fake API`, {
           position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
@@ -39,14 +41,37 @@ const CartComponent = (props: Cart) => {
     }
   }
 
-  const updateHandler = (id: number) => {
-    const selectedProduct = products?.find((item) => item.id === id)
-    const index: number = products?.findIndex((item) => item.id === id)
+  const updateHandler = async (id: number) => {
+    // const selectedProduct = products?.find((item) => item.id === id)
+    // const index: number = products?.findIndex((item) => item.id === id)
 
-    const cloneProducts = [...products]
+    // const cloneProducts = [...products]
 
-    selectedProduct ? (cloneProducts[index] = selectedProduct) : undefined
+    // if (selectedProduct) (cloneProducts[index] = selectedProduct)
 
+    // setProducts(cloneProducts)
+
+    try {
+      await updateProduct(id, updatedCart).then((res) =>
+        toast(`status code: ${res.status}- Edited - Using Fake API`, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        }),
+      )
+      await getProducts()
+        .then((res) => {
+          setProducts(res)
+        })
+        .catch((err) => console.log(err))
+    } catch (error) {
+      console.log(error)
+    }
     setEdit((prevState) => !prevState)
   }
 
@@ -62,7 +87,7 @@ const CartComponent = (props: Cart) => {
           type="text"
           className="text-xl my-2 w-2/3 rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
           defaultValue={title}
-          onChange={(e) => setUpdateCart({ ...updateCart, title: e.target.value })}
+          onChange={(e) => setUpdatedCart({ ...updatedCart, title: e.target.value })}
         />
       ) : (
         <p className="text-xl my-2">{title}</p>
@@ -76,20 +101,20 @@ const CartComponent = (props: Cart) => {
               type="text"
               className="text-xl my-2 w-1/3 rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
               defaultValue={category}
-              onChange={(e) => setUpdateCart({ ...updateCart, category: e.target.value })}
+              onChange={(e) => setUpdatedCart({ ...updatedCart, category: e.target.value })}
             />
             <textarea
               style={{ resize: 'none' }}
               className="text-xl my-2 w-2/3 h-28 rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
               defaultValue={description}
-              onChange={(e) => setUpdateCart({ ...updateCart, description: e.target.value })}
+              onChange={(e) => setUpdatedCart({ ...updatedCart, description: e.target.value })}
             />
             <input
               type="number"
               min={0.01}
               className="text-xl my-2 w-1/3 rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
               defaultValue={price}
-              onChange={(e) => setUpdateCart({ ...updateCart, price: Number(e.target.value) })}
+              onChange={(e) => setUpdatedCart({ ...updatedCart, price: Number(e.target.value) })}
             />
           </>
         ) : (
