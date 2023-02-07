@@ -1,11 +1,24 @@
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useProducts, useProductsAction } from '../../../context/ProductsProvider'
 import { Cart } from '../../../models/models'
 import { deleteProduct } from '../../../Services/CRUD/deleteProductService'
 import './cart.css'
 
 const CartComponent = (props: Cart) => {
+  const products = useProducts()
+  const setProducts = useProductsAction()
   const { price, title, description, category, image, id } = props
+  const [edit, setEdit] = useState<boolean>(false)
+  const [updateCart, setUpdateCart] = useState<Cart>({
+    category: '',
+    title: '',
+    description: '',
+    price: 0,
+    image: image,
+    id: id,
+  })
 
   const deleteHandler = async (id: number): Promise<void> => {
     try {
@@ -26,23 +39,83 @@ const CartComponent = (props: Cart) => {
     }
   }
 
+  const updateHandler = (id: number) => {
+    const selectedProduct = products?.find((item) => item.id === id)
+    const index: number = products?.findIndex((item) => item.id === id)
+
+    const cloneProducts = [...products]
+
+    selectedProduct ? (cloneProducts[index] = selectedProduct) : undefined
+
+    setEdit((prevState) => !prevState)
+  }
+
   return (
-    <div className="flex flex-col justify-center items-center bg-violet-300 w-1/3 h-96 box-content p-10 rounded-lg m-2">
+    <div className="overflow-hidden flex flex-col justify-center items-center bg-violet-300 w-1/3 h-96 box-content p-10 rounded-lg m-2">
       <div className="border-violet-700 p-5 w-30 h-30 bg-white rounded-lg">
         <img className="w-24 h-24 bg-transparent" src={`${image}`} />
       </div>
-      <p className="text-xl my-2">{title}</p>
+
+      {/* Edit Button Clicked -> state edit become true -> Title Become Input and Reverse */}
+      {edit ? (
+        <input
+          type="text"
+          className="text-xl my-2 w-2/3 rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
+          defaultValue={title}
+          onChange={(e) => setUpdateCart({ ...updateCart, title: e.target.value })}
+        />
+      ) : (
+        <p className="text-xl my-2">{title}</p>
+      )}
+
+      {/* Edit Button Clicked -> state edit become true -> Category, Description, Price Become Input and Reverse */}
       <div className="text-left flex flex-col items-start w-full">
-        <span>Category: {category}</span>
-        <p className="text-limit">description: {description}</p>
-        <h4 className="my-2">Price: ${price}</h4>
+        {edit ? (
+          <>
+            <input
+              type="text"
+              className="text-xl my-2 w-1/3 rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
+              defaultValue={category}
+              onChange={(e) => setUpdateCart({ ...updateCart, category: e.target.value })}
+            />
+            <textarea
+              style={{ resize: 'none' }}
+              className="text-xl my-2 w-2/3 h-28 rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
+              defaultValue={description}
+              onChange={(e) => setUpdateCart({ ...updateCart, description: e.target.value })}
+            />
+            <input
+              type="number"
+              min={0.01}
+              className="text-xl my-2 w-1/3 rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
+              defaultValue={price}
+              onChange={(e) => setUpdateCart({ ...updateCart, price: Number(e.target.value) })}
+            />
+          </>
+        ) : (
+          <>
+            <span>Category: {category}</span>
+            <p className="text-limit">description: {description}</p>
+            <h4 className="my-2">Price: ${price}</h4>
+          </>
+        )}
       </div>
-      <button
-        onClick={() => deleteHandler(id)}
-        className="w-12 h-4 p-2.5 box-content flex justify-center items-center text-white rounded-lg bg-red-500 hover:bg-red-700"
-      >
-        Delete
-      </button>
+
+      {/* Buttons */}
+      <div className="flex flex-row">
+        <button
+          onClick={() => deleteHandler(id)}
+          className="w-12 h-4 mr-5 p-2.5 box-content flex justify-center items-center text-white rounded-lg bg-red-500 hover:bg-red-700"
+        >
+          Delete
+        </button>
+        <button
+          onClick={() => updateHandler(id)}
+          className="w-12 h-4 p-2.5 box-content flex justify-center items-center text-white rounded-lg bg-blue-500 hover:bg-blue-700"
+        >
+          {edit ? 'Update' : 'Edit'}
+        </button>
+      </div>
     </div>
   )
 }

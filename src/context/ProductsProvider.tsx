@@ -1,13 +1,13 @@
 import { Cart, ReactChildrenProps } from '../models/models'
 import React, { useContext, useState } from 'react'
 
-const ProductsContext = React.createContext<Cart[] | undefined>([])
-const ProductsContextDispatcher = React.createContext<
-  React.Dispatch<React.SetStateAction<Cart[] | undefined>>
->(() => {})
+const ProductsContext = React.createContext<Cart[]>([])
+const ProductsContextDispatcher = React.createContext<React.Dispatch<React.SetStateAction<Cart[]>>>(
+  () => {},
+)
 
 const ProductsProvider = ({ children }: ReactChildrenProps) => {
-  const [products, setProducts] = useState<Cart[]>()
+  const [products, setProducts] = useState<Cart[]>([])
 
   return (
     <ProductsContext.Provider value={products}>
