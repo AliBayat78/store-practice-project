@@ -50,29 +50,32 @@ const CartComponent = (props: Cart) => {
     // if (selectedProduct) (cloneProducts[index] = selectedProduct)
 
     // setProducts(cloneProducts)
-
-    try {
-      await updateProduct(id, updatedCart).then((res) =>
-        toast(`status code: ${res.status}- Edited - Using Fake API`, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        }),
-      )
-      await getProducts()
-        .then((res) => {
-          setProducts(res)
-        })
-        .catch((err) => console.log(err))
-    } catch (error) {
-      console.log(error)
+    if (edit) {
+      try {
+        await updateProduct(id, updatedCart).then((res) =>
+          toast(`status code: ${res.status}- Edited - Using Fake API`, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          }),
+        )
+        await getProducts()
+          .then((res) => {
+            setProducts(res)
+          })
+          .catch((err) => console.log(err))
+      } catch (error) {
+        console.log(error)
+      }
+      setEdit((prevState) => !prevState)
+    } else {
+      setEdit((prevState) => !prevState)
     }
-    setEdit((prevState) => !prevState)
   }
 
   return (
