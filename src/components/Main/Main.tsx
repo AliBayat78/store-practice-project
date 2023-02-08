@@ -21,6 +21,7 @@ const Main = () => {
     id: Math.random(),
   })
 
+  //* Fetch Products when Components mount
   useEffect(() => {
     setTimeout(() => {
       getProducts()
