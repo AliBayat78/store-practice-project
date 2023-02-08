@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { useProducts, useProductsAction } from '../../../context/ProductsProvider'
+import { useProductsAction } from '../../../context/ProductsProvider'
 import { Cart } from '../../../models/models'
 import { deleteProduct } from '../../../Services/CRUD/deleteProductService'
 import { getProducts } from '../../../Services/CRUD/getProductsService'
 import { updateProduct } from '../../../Services/CRUD/putProductService'
 import './cart.css'
+import SkeletonComponent from './Skeleton-Cart/SkeletonCart'
 
 const CartComponent = (props: Cart) => {
-  const products = useProducts()
   const setProducts = useProductsAction()
   const { price, title, description, category, image, id } = props
   const [edit, setEdit] = useState<boolean>(false)

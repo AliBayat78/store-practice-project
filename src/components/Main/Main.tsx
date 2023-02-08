@@ -5,11 +5,12 @@ import { Cart } from '../../models/models'
 import { getProducts } from '../../Services/CRUD/getProductsService'
 import { PostProduct } from '../../Services/CRUD/postProductService'
 import CartComponent from './Cart/Cart'
-import './main.css'
+import SkeletonComponent from './Cart/Skeleton-Cart/SkeletonCart'
 
 const Main = () => {
   const products = useProducts()
   const setProducts = useProductsAction()
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const [Product, setProduct] = useState<Cart>({
     title: '',
@@ -21,13 +22,16 @@ const Main = () => {
   })
 
   useEffect(() => {
-    getProducts()
-      .then((res) => {
-        setProducts(res)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    setTimeout(() => {
+      getProducts()
+        .then((res) => {
+          setProducts(res)
+          setIsLoading(false)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }, 2000)
   }, [])
 
   const addProductHandler = async (Product: Cart): Promise<void> => {
@@ -94,10 +98,10 @@ const Main = () => {
           Add
         </button>
       </div>
-
       <div className="w-full h-full flex flex-row flex-wrap justify-around items-center">
-        {products?.map((item) => {
-          return (
+        {products.length > 6 &&
+          !isLoading &&
+          products.map((item) => (
             <CartComponent
               id={item.id}
               key={item.id}
@@ -107,8 +111,11 @@ const Main = () => {
               price={item.price}
               image={item.image}
             />
-          )
-        })}
+          ))}
+        {isLoading &&
+          [0, 0, 0, 0, 0, 0].map(() => {
+            return <SkeletonComponent />
+          })}
       </div>
     </div>
   )
