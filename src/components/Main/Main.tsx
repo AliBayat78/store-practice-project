@@ -66,31 +66,41 @@ const Main = () => {
         <input
           className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
           placeholder="title"
-          onChange={(e) => setProduct({ ...Product, title: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setProduct({ ...Product, title: e.target.value })
+          }
         />
         <input
           className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
           placeholder="category"
-          onChange={(e) => setProduct({ ...Product, category: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setProduct({ ...Product, category: e.target.value })
+          }
         />
         <input
           className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
           placeholder="description"
-          onChange={(e) => setProduct({ ...Product, description: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setProduct({ ...Product, description: e.target.value })
+          }
         />
         <input
           className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
           placeholder="price"
           type="number"
           min="0.01"
-          onChange={(e) => setProduct({ ...Product, price: Number(e.target.value) })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setProduct({ ...Product, price: Number(e.target.value) })
+          }
         />
         <input
           type="file"
           className="text-violet-300 translate-x-1/4 ml-12"
           accept=".JPEG, .PNG, .jpg, image/*"
           name="img"
-          onChange={(e) => setProduct({ ...Product, image: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setProduct({ ...Product, image: e.target.value })
+          }
         />
         <button
           onClick={() => addProductHandler(Product)}
