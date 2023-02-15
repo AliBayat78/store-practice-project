@@ -4,7 +4,7 @@ export interface Cart {
   price: number
   category: string
   description: string
-  image: string
+  image: any
 }
 
 export type ReactChildrenProps = {

@@ -16,7 +16,7 @@ const Main = () => {
     title: '',
     description: '',
     category: '',
-    image: '',
+    image: undefined,
     price: 0,
     id: Math.random(),
   })
@@ -49,6 +49,14 @@ const Main = () => {
           theme: 'light',
         }),
       )
+      setProduct({
+        title: '',
+        description: '',
+        category: '',
+        image: undefined,
+        price: 0,
+        id: Math.random(),
+      })
       await getProducts()
         .then((res) => {
           setProducts(res)
@@ -61,53 +69,63 @@ const Main = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="flex flex-col justify-around items-center bg-violet-300 w-1/3 h-96 box-content p-10 rounded-lg m-2">
-        <h3>Add Product</h3>
-        <input
-          className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
-          placeholder="title"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setProduct({ ...Product, title: e.target.value })
-          }
-        />
-        <input
-          className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
-          placeholder="category"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setProduct({ ...Product, category: e.target.value })
-          }
-        />
-        <input
-          className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
-          placeholder="description"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setProduct({ ...Product, description: e.target.value })
-          }
-        />
-        <input
-          className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
-          placeholder="price"
-          type="number"
-          min="0.01"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setProduct({ ...Product, price: Number(e.target.value) })
-          }
-        />
-        <input
-          type="file"
-          className="text-violet-300 translate-x-1/4 ml-12"
-          accept=".JPEG, .PNG, .jpg, image/*"
-          name="img"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setProduct({ ...Product, image: e.target.value })
-          }
-        />
-        <button
-          onClick={() => addProductHandler(Product)}
-          className="bg-white w-20 h-10 rounded-lg hover:bg-violet-300 hover:text-blue-500 hover:text-lg ease-in-out duration-300"
-        >
-          Add
-        </button>
+      <div className="flex flex-row justify-around items-center bg-violet-300 w-1/3 h-96 box-content p-10 rounded-lg m-2">
+        {Product.image ? (
+          <img src={Product.image} style={{ width: '300px', height: '300px' }} />
+        ) : null}
+        <div className="flex flex-col justify-around items-center w-1/3 h-96 box-content p-10 rounded-lg m-2">
+          <h3>Add Product</h3>
+          <input
+            className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
+            placeholder="title"
+            value={Product.title}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setProduct({ ...Product, title: e.target.value })
+            }
+          />
+          <input
+            className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
+            placeholder="category"
+            value={Product.category}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setProduct({ ...Product, category: e.target.value })
+            }
+          />
+          <input
+            className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
+            placeholder="description"
+            value={Product.description}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setProduct({ ...Product, description: e.target.value })
+            }
+          />
+          <input
+            className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
+            placeholder="price"
+            type="number"
+            value={Product.price}
+            min="0.01"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setProduct({ ...Product, price: Number(e.target.value) })
+            }
+          />
+          <input
+            type="file"
+            className="text-violet-300 translate-x-1/4 ml-12"
+            accept=".JPEG, .PNG, .jpg, image/*"
+            name="img"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              if (!e.target.files) return
+              setProduct({ ...Product, image: URL.createObjectURL(e.target.files[0]) })
+            }}
+          />
+          <button
+            onClick={() => addProductHandler(Product)}
+            className="bg-white w-20 h-10 rounded-lg hover:bg-violet-300 hover:text-blue-500 hover:text-lg ease-in-out duration-300"
+          >
+            Add
+          </button>
+        </div>
       </div>
       <div className="w-full h-full flex flex-row flex-wrap justify-around items-center">
         {products.length > 6 &&

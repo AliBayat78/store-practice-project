@@ -5,9 +5,9 @@ import { menuItemsType } from '../../models/models'
 
 const Navbar = () => {
   const [menuItems, setMenuItems] = useState<menuItemsType[]>([
-    { title: 'Home', selected: true, id: 1 },
     { title: 'Cart', selected: false, id: 2 },
     { title: 'Shoes', selected: false, id: 3 },
+    { title: 'Home', selected: true, id: 1 },
     { title: 'Shirts', selected: false, id: 4 },
     { title: 'Hats', selected: false, id: 5 },
   ])
@@ -40,7 +40,7 @@ const Navbar = () => {
         return (
           <button
             onClick={() => selectItemHandler(item.id)}
-            key={Math.random()}
+            key={item.id}
             className={`hover:bg-white hover:text-violet-800 m-5 p-2 rounded-md ${
               item.selected ? 'bg-white text-violet-800' : ''
             }`}
