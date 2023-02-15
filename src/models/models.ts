@@ -10,3 +10,9 @@ export interface Cart {
 export type ReactChildrenProps = {
   children?: React.ReactNode
 }
+
+export interface menuItemsType {
+  title: string
+  selected: boolean
+  id: number
+}
