@@ -1,6 +1,5 @@
 import { arrayMoveMutable } from 'array-move'
 import { useState } from 'react'
-import { isTemplateSpan } from 'typescript'
 import { menuItemsType } from '../../models/models'
 
 const Navbar = () => {
@@ -28,7 +27,7 @@ const Navbar = () => {
     copySelectedItem.selected = true
     cloneState[index] = copySelectedItem
 
-    // changing the index in state
+    //* changing the index in state
     arrayMoveMutable(cloneState, index, 2)
 
     setMenuItems(cloneState)

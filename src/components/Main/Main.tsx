@@ -21,7 +21,7 @@ const Main = () => {
     id: Math.random(),
   })
 
-  //* Fetch Products when Components mount
+  //? Fetch Products when Components mount
   useEffect(() => {
     setTimeout(() => {
       getProducts()
@@ -49,6 +49,8 @@ const Main = () => {
           theme: 'light',
         }),
       )
+
+      //? empty the state and inputs
       setProduct({
         title: '',
         description: '',

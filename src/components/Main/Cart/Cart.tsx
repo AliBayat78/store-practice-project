@@ -7,7 +7,6 @@ import { deleteProduct } from '../../../Services/CRUD/deleteProductService'
 import { getProducts } from '../../../Services/CRUD/getProductsService'
 import { updateProduct } from '../../../Services/CRUD/putProductService'
 import './cart.css'
-import SkeletonComponent from './Skeleton-Cart/SkeletonCart'
 
 const CartComponent = (props: Cart) => {
   const setProducts = useProductsAction()
@@ -42,14 +41,6 @@ const CartComponent = (props: Cart) => {
   }
 
   const updateHandler = async (id: number) => {
-    // const selectedProduct = products?.find((item) => item.id === id)
-    // const index: number = products?.findIndex((item) => item.id === id)
-
-    // const cloneProducts = [...products]
-
-    // if (selectedProduct) (cloneProducts[index] = selectedProduct)
-
-    // setProducts(cloneProducts)
     if (edit) {
       try {
         await updateProduct(id, updatedCart).then((res) =>
