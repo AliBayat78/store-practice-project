@@ -16,3 +16,10 @@ export interface menuItemsType {
   selected: boolean
   id: number
 }
+
+export interface adjustments {
+  brightness: number
+  contrast: number
+  saturation: number
+  sharpness: number
+}

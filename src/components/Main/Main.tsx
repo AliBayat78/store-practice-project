@@ -6,6 +6,7 @@ import { getProducts } from '../../Services/CRUD/getProductsService'
 import { PostProduct } from '../../Services/CRUD/postProductService'
 import CartComponent from './Cart/Cart'
 import SkeletonComponent from './Cart/Skeleton-Cart/SkeletonCart'
+import ImageEditor from './ImageEditor/ImageEditor'
 
 const Main = () => {
   const products = useProducts()
@@ -72,9 +73,7 @@ const Main = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="flex flex-row justify-around items-center bg-violet-300 w-1/3 h-96 box-content p-10 rounded-lg m-2">
-        {Product.image ? (
-          <img src={Product.image} style={{ width: '300px', height: '300px' }} />
-        ) : null}
+        {Product.image ? <ImageEditor image={Product.image} /> : null}
         <div className="flex flex-col justify-around items-center w-1/3 h-96 box-content p-10 rounded-lg m-2">
           <h3>Add Product</h3>
           <input
