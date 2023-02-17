@@ -20,6 +20,6 @@ export interface menuItemsType {
 export interface adjustments {
   brightness: number
   contrast: number
-  saturation: number
-  sharpness: number
+  saturate: number
+  blur: number
 }

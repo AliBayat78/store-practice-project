@@ -144,7 +144,7 @@ const Main = () => {
           ))}
         {isLoading &&
           [0, 0, 0, 0, 0, 0].map(() => {
-            return <SkeletonComponent />
+            return <SkeletonComponent key={Math.random()} />
           })}
       </div>
     </div>
