@@ -2,109 +2,79 @@ import { useState } from 'react'
 import { adjustments } from '../../../models/models'
 const ImageEditor = ({ image }: any) => {
   const [adjustment, setAdjustment] = useState<adjustments>({
-    brightness: 1,
-    contrast: 1,
-    saturate: 1,
-    blur: 1,
+    brightness: 100,
+    contrast: 100,
+    saturate: 100,
+    blur: 0,
   })
+
+  const getImageStyles = () => {
+    const filters = `brightness(${adjustment.brightness}%) contrast(${adjustment.contrast}%) saturate(${adjustment.saturate}%) blur(${adjustment.blur}px)`
+    return { filter: filters }
+  }
 
   return (
     <div className="flex flex-col justify-between items-center h-full">
-      <img
-        src={image}
-        style={{
-          width: '300px',
-          height: '300px',
-        }}
-        className={`filter ${
-          adjustment.brightness === 50
-            ? 'brightness-50'
-            : adjustment.brightness === 100
-            ? 'brightness-100'
-            : adjustment.brightness === 150
-            ? 'brightness-150'
-            : adjustment.brightness === 200
-            ? 'brightness-200'
-            : ''
-        } ${
-          adjustment.contrast === 50
-            ? 'contrast-50'
-            : adjustment.contrast === 100
-            ? 'contrast-100'
-            : adjustment.contrast === 150
-            ? 'contrast-150'
-            : adjustment.contrast === 200
-            ? 'contrast-200'
-            : ''
-        } ${
-          adjustment.saturate === 50
-            ? 'saturate-50'
-            : adjustment.saturate === 100
-            ? 'saturate-100'
-            : adjustment.saturate === 150
-            ? 'saturate-150'
-            : adjustment.saturate === 200
-            ? 'saturate-200'
-            : ''
-        } ${
-          adjustment.blur === 50
-            ? 'blur-sm'
-            : adjustment.blur === 100
-            ? 'blur'
-            : adjustment.blur === 150
-            ? 'blur-md'
-            : adjustment.blur === 200
-            ? 'blur-xl'
-            : 'blur-none'
-        }`}
-      />
+      <img src={image} style={getImageStyles()} className="w-72 h-72" />
       <div className="flex flex-row justify-between w-full">
-        <input
-          onChange={(e) => {
-            setAdjustment({ ...adjustment, [e.target.name]: Number(e.target.value) })
-          }}
-          name="brightness"
-          type="range"
-          min="0"
-          max="200"
-          step="50"
-          value={adjustment.brightness}
-        />
-        <input
-          onChange={(e) => {
-            setAdjustment({ ...adjustment, [e.target.name]: Number(e.target.value) })
-          }}
-          name="contrast"
-          type="range"
-          min="0"
-          max="200"
-          step="50"
-          value={adjustment.contrast}
-        />
+        <div className="flex flex-col">
+          <input
+            onChange={(e) => {
+              setAdjustment({ ...adjustment, [e.target.name]: Number(e.target.value) })
+            }}
+            name="brightness"
+            type="range"
+            min="0"
+            max="100"
+            step="25"
+            value={adjustment.brightness}
+          />
+          <span className="text-blue-600 font-bold">brightness {adjustment.brightness}%</span>
+        </div>
+        <div className="flex flex-col">
+          <input
+            onChange={(e) => {
+              setAdjustment({ ...adjustment, [e.target.name]: Number(e.target.value) })
+            }}
+            name="contrast"
+            type="range"
+            min="0"
+            max="100"
+            step="25"
+            value={adjustment.contrast}
+          />
+          <span className="text-blue-600 font-bold">contrast {adjustment.contrast}%</span>
+        </div>
       </div>
       <div className="flex flex-row justify-between w-full">
-        <input
-          onChange={(e) => {
-            setAdjustment({ ...adjustment, [e.target.name]: Number(e.target.value) })
-          }}
-          name="saturate"
-          type="range"
-          min="0"
-          max="200"
-          step="50"
-          value={adjustment.saturate}
-        />
-        <input
-          onChange={(e) => {
-            setAdjustment({ ...adjustment, [e.target.name]: Number(e.target.value) })
-          }}
-          name="blur"
-          type="range"
-          min="0"
-          max="200"
-          step="50"
-          value={adjustment.blur}
-        />
+        <div className="flex flex-col">
+          <input
+            onChange={(e) => {
+              setAdjustment({ ...adjustment, [e.target.name]: Number(e.target.value) })
+            }}
+            name="saturate"
+            type="range"
+            min="0"
+            max="100"
+            step="25"
+            value={adjustment.saturate}
+          />
+          <span className="text-blue-600 font-bold">saturate {adjustment.saturate}%</span>
+        </div>
+        <div className="flex flex-col">
+          <input
+            onChange={(e) => {
+              setAdjustment({ ...adjustment, [e.target.name]: Number(e.target.value) })
+            }}
+            name="blur"
+            type="range"
+            min="0"
+            max="10"
+            step="1"
+            value={adjustment.blur}
+          />
+          <span className="text-blue-600 font-bold">blur {adjustment.blur}px</span>
+        </div>
       </div>
     </div>
   )
