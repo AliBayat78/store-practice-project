@@ -37,7 +37,11 @@ const Main = () => {
     }, 2000)
   }, [])
 
-  const addProductHandler = async (Product: Cart): Promise<void> => {
+  const addProductHandler = async (
+    e: React.FormEvent<HTMLFormElement>,
+    Product: Cart,
+  ): Promise<void> => {
+    e.preventDefault()
     try {
       await PostProduct(Product).then((res) =>
         toast(`status code: ${res.status} - Using Fake API`, {
@@ -82,9 +86,13 @@ const Main = () => {
             adjustments={Product.adjustments}
           />
         ) : null}
-        <div className="flex flex-col justify-around items-center w-1/3 h-96 box-content p-10 rounded-lg m-2">
+        <form
+          onSubmit={(e) => addProductHandler(e, Product)}
+          className="flex flex-col justify-around items-center w-1/3 h-96 box-content p-10 rounded-lg m-2"
+        >
           <h3>Add Product</h3>
           <input
+            required
             className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
             placeholder="title"
             value={Product.title}
@@ -93,6 +101,7 @@ const Main = () => {
             }
           />
           <input
+            required
             className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
             placeholder="category"
             value={Product.category}
@@ -101,6 +110,7 @@ const Main = () => {
             }
           />
           <input
+            required
             className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
             placeholder="description"
             value={Product.description}
@@ -109,6 +119,7 @@ const Main = () => {
             }
           />
           <input
+            required
             className="rounded-lg outline-none border-2 border-blue-400 focus:border-blue-700 p-0.5 ease-in-out duration-300"
             placeholder="price"
             type="number"
@@ -119,6 +130,7 @@ const Main = () => {
             }
           />
           <input
+            required
             type="file"
             className="text-violet-300 translate-x-1/4 ml-12"
             accept=".JPEG, .PNG, .jpg, image/*"
@@ -129,12 +141,12 @@ const Main = () => {
             }}
           />
           <button
-            onClick={() => addProductHandler(Product)}
+            type="submit"
             className="bg-white w-20 h-10 rounded-lg hover:bg-violet-300 hover:text-blue-500 hover:text-lg ease-in-out duration-300"
           >
             Add
           </button>
-        </div>
+        </form>
       </div>
       <div className="w-full h-full flex flex-row flex-wrap justify-around items-center">
         {products.length > 6 &&
