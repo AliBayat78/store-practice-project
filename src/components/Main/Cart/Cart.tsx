@@ -10,7 +10,7 @@ import './cart.css'
 
 const CartComponent = (props: Cart) => {
   const setProducts = useProductsAction()
-  const { price, title, description, category, image, id } = props
+  const { price, title, description, category, image, id, adjustments } = props
   const [edit, setEdit] = useState<boolean>(false)
   const [updatedCart, setUpdatedCart] = useState<Cart>({
     category: '',
@@ -19,6 +19,7 @@ const CartComponent = (props: Cart) => {
     price: 0,
     image: image,
     id: id,
+    adjustments: { brightness: 100, contrast: 100, saturate: 100, blur: 0 },
   })
 
   const deleteHandler = async (id: number): Promise<void> => {
@@ -69,10 +70,15 @@ const CartComponent = (props: Cart) => {
     }
   }
 
+  const getImageStyles = () => {
+    const filters = `brightness(${adjustments?.brightness}%) contrast(${adjustments?.contrast}%) saturate(${adjustments?.saturate}%) blur(${adjustments?.blur}px)`
+    return { filter: filters }
+  }
+
   return (
     <div className="overflow-hidden flex flex-col justify-center items-center bg-violet-300 w-1/3 h-96 box-content p-10 rounded-lg m-2">
       <div className="border-violet-700 p-5 w-30 h-30 bg-white rounded-lg">
-        <img className="w-24 h-24 bg-transparent" src={`${image}`} />
+        <img className="w-24 h-24 bg-transparent" style={getImageStyles()} src={`${image}`} />
       </div>
 
       {/* Edit Button Clicked -> state edit become true -> Title Become Input and Reverse */}

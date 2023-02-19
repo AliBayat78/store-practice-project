@@ -5,6 +5,14 @@ export interface Cart {
   category: string
   description: string
   image: any
+  adjustments?: adjustmentsType
+}
+
+export interface adjustmentsType {
+  brightness: number
+  contrast: number
+  saturate: number
+  blur: number
 }
 
 export type ReactChildrenProps = {
@@ -15,11 +23,4 @@ export interface menuItemsType {
   title: string
   selected: boolean
   id: number
-}
-
-export interface adjustments {
-  brightness: number
-  contrast: number
-  saturate: number
-  blur: number
 }
